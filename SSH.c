@@ -1,4 +1,4 @@
-#include <stdio.h>
+	#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -17,11 +17,11 @@ int main(void){
 	struct character *character_temp = NULL;
 	struct node *node_temp = NULL;
     
-    character_temp = newCharacter("Rogerinho", 200, 15, 0.70, 0.50, 1, 100, 70, 0.99, 10, "capacete de carapaça", 20, "casco de carapaça", 20, "escamas", 10, "botas escamosas", 1, "colar estiloso", 5, "espada", 50, 50, 25, 25, 25, 25);
+    character_temp = newCharacter("Rogerinho", 200, 9, 0.70, 0.50, 1, 100, 70, 0.99, 10, "capacete de carapaça", 20, "casco de carapaça", 20, "escamas", 10, "botas escamosas", 1, "colar estiloso", 12, "machado", 50, 50, 25, 25, 25, 25);
 	node_temp = characterNode(character_temp);
     insertCharacter(c_list, node_temp, 0);
     
-    character_temp = newCharacter("You", 70, 15, 0.70, 0.50, 1, 67, 70, 0.99, 10, "capacete de carapaça", 20, "casco de carapaça", 20, "escamas", 10, "botas escamosas", 1, "colar estiloso", 5, "espada", 50, 50, 25, 25, 25, 25);
+    character_temp = newCharacter("You", 190, 9, 0.70, 0.50, 1, 67, 70, 0.99, 10, "capacete de carapaça", 20, "casco de carapaça", 20, "escamas", 10, "botas escamosas", 1, "colar estiloso", 10, "espada", 50, 50, 25, 25, 25, 25);
 	node_temp = characterNode(character_temp);
     insertCharacter(c_list, node_temp, 0);
     

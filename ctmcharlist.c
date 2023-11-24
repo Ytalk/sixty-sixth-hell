@@ -159,7 +159,7 @@ struct node *removeCharacter(struct desc_LSE *list, char char_name[]){
 		list->LSE = list->LSE->next;
 		list->lenght--;
 		//free(aux);
-		printf("você foi deletado\n");
+		printf("você foi deletado\n"); //para teste
 		return aux;
 	}
 	
@@ -169,13 +169,13 @@ struct node *removeCharacter(struct desc_LSE *list, char char_name[]){
 	}
 
     if(aux == NULL) {
-        printf("Personagem com o nome %s não foi encontrado.\n", char_name);
+        printf("personagem com o nome %s não foi encontrado.\n", char_name);
         return NULL;
     }
 
 	ant->next = aux->next;
 	list->lenght--;
-	printf("o personagem %s foi deletado\n",aux->info->name);
+	printf("o personagem %s foi deletado\n",aux->info->name); //para teste
 	//free(aux);
 	return aux;
 }

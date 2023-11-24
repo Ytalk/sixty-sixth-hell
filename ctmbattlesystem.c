@@ -5,16 +5,28 @@
 #include <string.h>
 #include <unistd.h>
 
-
 #include "character.h"
 #include "ctmcharlist.h"
 #include "ctmbattlequeue.h"
 #include "ctmbattlesystem.h"
 
+
+void delay(int MS){
+    clock_t start = clock();
+
+    // Calcular o número de pulsos de clock correspondentes aos milissegundos desejados
+    clock_t pulses = (MS * CLOCKS_PER_SEC) / 1000;
+
+    while ((clock() - start) < pulses){
+        
+    }
+}
+
+
 bool probability(int success){
     srand(time(NULL));
 
-    int result = rand() % 100;  //numero de 0 a 99
+    int result = rand() % 100;
 
     if (result < success){
         //porcentagem de sucesso foi correspondida
@@ -48,20 +60,23 @@ int hitOrMiss(int DMG, float CRIT_DMG, int agility){
 }
 
 
-void attack(struct character *char_attacked, int atk, float crit, int agility, char author_name[20], int NPC){
+void attack(struct character *char_attacked, int atk, struct equipment_label weapon, float crit, int agility, char author_name[20], int control){
 	
 	float def = char_attacked->DEF;
+	if(weapon.equipment_action != -1){ // sistema de arma deve ser aprimorado assim que o inventário for implementado
+		atk = atk + weapon.equipment_action;
+	}
 
-	srand(time(NULL));
-    int min = 1;
-    int max = 6;
-    int local = rand() % (max - min + 1) + min;
-	
+	int local;
 	do{
-		if(NPC == 1){
+		if(control == 1){
 			printf("\nescolha a parte do corpo que deseja atacar:\n\n1. cabeça\n2. tronco\n3. braço direito\n4. braço esquerdo\n5. perna direita\n6. perna esquerda\n");
 			setbuf(stdin, NULL);
 			scanf("%i",&local);
+		}
+		else{
+			srand(time(NULL));
+            local = rand() % 6 + 1; //bot para testes, implementar um bot inteligente em cython
 		}
 
 		switch (local){	
@@ -94,7 +109,7 @@ void attack(struct character *char_attacked, int atk, float crit, int agility, c
 					
 					
 					if(char_attacked->members.torso <= 0){
-						//printf("a cabeça do(a) %s foi arrancada.\n", char_attacked->name);
+						printf("BULLSEYA FOR %s\n", char_attacked->name);
 						char_attacked->HP = 0;
 					}
 
@@ -112,8 +127,11 @@ void attack(struct character *char_attacked, int atk, float crit, int agility, c
 					char_attacked->members.arm_right -= atk-(atk*def);
 					printf(" %i\n", char_attacked->members.arm_right);
 
-					if(char_attacked->members.arm_right <= 0)
+					if(char_attacked->members.arm_right <= 0){
 						printf("o braço direito do(a) %s foi arrancado.\n", char_attacked->name);
+						printf("%s não pode mais empunhar a arma %s\n", char_attacked->name, char_attacked->equipment.weapon.name);
+						char_attacked->equipment.weapon.equipment_action = -1; //aqui também
+					}
 
 					printf("vida total: %i ->", char_attacked->HP);
 					char_attacked->HP -= atk-(atk*def);
@@ -154,8 +172,10 @@ void attack(struct character *char_attacked, int atk, float crit, int agility, c
 					char_attacked->members.leg_right -= atk-(atk*def);
 					printf(" %i\n", char_attacked->members.leg_right);
 
-					if(char_attacked->members.leg_right <= 0)
-						printf("a perna direita do(a) %s foi arrancado.\n", char_attacked->name);
+					if(char_attacked->members.leg_right <= 0){
+						printf("a perna direita do(a) %s foi arrancado. (-10 de agilidade)\n", char_attacked->name);
+						char_attacked->agility = agility - 10;
+					}
 
 					printf("vida total: %i ->", char_attacked->HP);
 					char_attacked->HP -= atk-(atk*def);
@@ -175,8 +195,10 @@ void attack(struct character *char_attacked, int atk, float crit, int agility, c
 					char_attacked->members.leg_left -= atk-(atk*def);
 					printf(" %i\n", char_attacked->members.leg_left);
 
-					if(char_attacked->members.leg_left <= 0)
-						printf("a perna esquerda do(a) %s foi arrancado.\n", char_attacked->name);
+					if(char_attacked->members.leg_left <= 0){
+						printf("a perna esquerda do(a) %s foi arrancado. (-10 de agilidade)\n", char_attacked->name);
+						char_attacked->agility = agility - 10;
+					}
 
 					printf("vida total: %i ->", char_attacked->HP);
 					char_attacked->HP -= atk-(atk*def);
@@ -221,7 +243,7 @@ void battle(struct desc_LSE *list, struct character *player, struct character *o
 				switch(op){
 					case 1:
 					if(player->SP >= 12){
-						attack(oponent, player->DMG, player->CRIT_DMG, player->agility, player->name, 1);
+						attack(oponent, player->DMG, player->equipment.weapon, player->CRIT_DMG, player->agility, player->name, 1);
 						player->SP -= 12;
 					}
 					else{
@@ -271,8 +293,8 @@ void battle(struct desc_LSE *list, struct character *player, struct character *o
 		if(strcmp(new_queue_node->info->name, oponent->name) == 0){
 			printf("\n\n===================================================================\n\t\tT U R N O   D O   O P O N E N T E\n\n\n");
 			if(oponent->SP >= 12){
-				sleep(2);
-				attack(player, oponent->DMG, oponent->CRIT_DMG, oponent->agility, oponent->name, 2);
+				delay(1000);
+				attack(player, oponent->DMG, oponent->equipment.weapon, oponent->CRIT_DMG, oponent->agility, oponent->name, 2);
 				oponent->SP -= 12;
 			}
 			else{

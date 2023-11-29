@@ -9,6 +9,7 @@
 #include "ctmcharlist.h"
 #include "ctmbattlequeue.h"
 #include "ctmbattlesystem.h"
+#include "ctminventory.h"
 
 int main(void){
 	setlocale(LC_ALL, "");

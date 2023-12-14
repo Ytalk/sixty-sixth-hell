@@ -1,15 +1,40 @@
-struct equipment_label{
+struct equipment_helmet{
+	char name[20];
+	int equipment_action;
+};
+
+struct equipment_superior_armor{
+	char name[20];
+	int equipment_action;
+};
+
+struct equipment_inferior_armor{
+	char name[20];
+	int equipment_action;
+};
+
+struct equipment_boots{
+	char name[20];
+	int equipment_action;
+};
+
+struct equipment_accessory{
+	char name[20];
+	int equipment_action;
+};
+
+struct equipment_weapon{
 	char name[20];
 	int equipment_action;
 };
 
 struct equipment{
-	struct equipment_label helmet;
-	struct equipment_label superior_armor;
-	struct equipment_label inferior_armor;
-	struct equipment_label boots;
-	struct equipment_label accessory;
-	struct equipment_label weapon;
+	struct equipment_helmet helmet;
+	struct equipment_superior_armor superior_armor;
+	struct equipment_inferior_armor inferior_armor;
+	struct equipment_boots boots;
+	struct equipment_accessory accessory;
+	struct equipment_weapon weapon;
 };
 
 struct members{

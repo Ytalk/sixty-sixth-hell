@@ -5,6 +5,7 @@
 #include "character.h"
 #include "ctminventory.h"
 
+
 struct descritor_arvore* inicializa(void){
     struct descritor_arvore *myTree;
     myTree = (struct descritor_arvore *)malloc(sizeof(struct descritor_arvore));
@@ -13,7 +14,7 @@ struct descritor_arvore* inicializa(void){
     return myTree;	
 }
 
-struct nodo_AVL* criaNodo(struct equipment_label item){
+struct nodo_AVL* criaNodo(union item item){
 	struct nodo_AVL* novonodo_AVL;
 	novonodo_AVL = (struct nodo_AVL *) malloc(sizeof(struct nodo_AVL));
 	

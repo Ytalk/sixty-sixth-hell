@@ -1,4 +1,4 @@
-	#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -12,7 +12,7 @@
 #include "ctminventory.h"
 
 int main(void){
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "Portuguese");
 	
 	struct desc_LSE *c_list = characterList();
 	struct character *character_temp = NULL;
@@ -44,7 +44,7 @@ int main(void){
     	scanf("%i",&op_menu);
     	switch(op_menu){
         	case 1:
-			printf("prepare-se para morrer na fase pre-alpha, seu merda!\n");
+			printf("teste de batalha da versão pre-alpha!\n");
 			
 			battle(c_list, c_list->LSE->info, c_list->LSE->next->info);
         	break;

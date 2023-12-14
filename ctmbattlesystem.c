@@ -60,7 +60,7 @@ int hitOrMiss(int DMG, float CRIT_DMG, int agility){
 }
 
 
-void attack(struct character *char_attacked, int atk, struct equipment_label weapon, float crit, int agility, char author_name[20], int control){
+void attack(struct character *char_attacked, int atk, struct equipment_weapon weapon, float crit, int agility, char author_name[20], int control){
 	
 	float def = char_attacked->DEF;
 	if(weapon.equipment_action != -1){ // sistema de arma deve ser aprimorado assim que o inventário for implementado
